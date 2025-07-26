@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    
+    <!-- Bootstrap CSS for layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS for styling -->
+    <style>
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #5c6bc0;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h2, h3 {
+            color: #5c6bc0;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #5c6bc0;
+            border-color: #5c6bc0;
+        }
+
+        .btn-primary:hover {
+            background-color: #3f4b8f;
+            border-color: #3f4b8f;
+        }
+
+        .btn-success {
+            background-color: #66bb6a;
+            border-color: #66bb6a;
+        }
+
+        .btn-success:hover {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .file-upload-btn {
+            background-color: #fdd835;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .file-upload-btn:hover {
+            background-color: #fbc02d;
+        }
+
+        .prediction-container {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .prediction-container h2, .prediction-container h3 {
+            color: #388e3c;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Customer Churn Prediction</h1>
+
+        <!-- Input form -->
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="age" class="form-label">Age:</label>
+                <input type="number" id="age" name="age" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender" class="form-label">Gender:</label>
+                <select id="gender" name="gender" class="form-select" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subscription_length" class="form-label">Subscription Length (months):</label>
+                <input type="number" id="subscription_length" name="subscription_length" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subscription_type" class="form-label">Subscription Type:</label>
+                <select id="subscription_type" name="subscription_type" class="form-select" required>
+                    <option value="Basic">Basic</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Premium">Premium</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="number_of_logins" class="form-label">Number of Logins:</label>
+                <input type="number" id="number_of_logins" name="number_of_logins" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="login_activity" class="form-label">Login Activity:</label>
+                <select id="login_activity" name="login_activity" class="form-select" required>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="customer_ratings" class="form-label">Customer Ratings:</label>
+                <input type="number" id="customer_ratings" name="customer_ratings" class="form-control" step="0.1" min="1" max="5" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="prediction-container">
+                <h2>{{ prediction_text }}</h2>
+                <h3>{{ churn_prob_text }}</h3>
+                <h3>{{ no_churn_prob_text }}</h3>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Customer Churn Prediction | Designed by Your Team</p>
+    </footer>
+
+    <!-- Bootstrap JS for layout functionalities -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
